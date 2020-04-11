@@ -1,0 +1,58 @@
+---
+- name: Install zsh
+  apt:
+    name: zsh
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Create and setup user
+  user:
+    name: "{{ user }}"
+    shell: /bin/zsh
+    groups: adm,cdrom,sudo,dip,plugdev,lxd,docker
+
+- name: Install oh-my-zsh
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh
+    dest: "/home/{{ user }}/.oh-my-zsh"
+
+- name: Change oh-my-zsh permissions
+  file:
+    path: "/home/{{ user }}/.oh-my-zsh"
+    state: directory
+    recurse: yes
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
+- name: Add .zshrc
+  template:
+    src: zshrc.j2
+    dest: /home/lol/.zshrc
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0640
+
+- name: Add olo-light zsh theme
+  copy:
+    src: olo-light.zsh-theme
+    dest: "/home/{{ user }}/.oh-my-zsh/custom/themes/olo-light.zsh-theme"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0640
+
+- name: Create .ssh directory
+  file:
+    path: "/home/{{ user }}/.ssh"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0700
+
+- name: Add ssh public key
+  copy:
+    content: "{{ ssh_key }}"
+    dest: "/home/{{ user }}/.ssh/authorized_keys"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    mode: 0600

@@ -1,0 +1,28 @@
+---
+- name: Upgrade all the packages to the latest versions
+  apt:
+    name: "*"
+    state: latest
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Remove unneeded packeges
+  apt:
+    autoremove: yes
+
+- name: Install tools
+  apt:
+    pkg:
+      - sudo
+      - nano
+      - wget
+      - curl
+      - git
+      - lsof
+      - telnet
+      - whois
+      - dnsutils
+      - traceroute
+      - tmux
+      - htop
+      - mc
