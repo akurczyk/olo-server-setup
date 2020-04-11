@@ -1,0 +1,6 @@
+[all]
+123.123.123.123
+
+[all:vars]
+user=HERE
+ssk_key=HERE
