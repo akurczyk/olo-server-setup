@@ -3,4 +3,4 @@
 
 [all:vars]
 user=HERE
-ssk_key=HERE
+ssh_key=HERE
