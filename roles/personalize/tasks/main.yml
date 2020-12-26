@@ -28,7 +28,7 @@
 - name: Add .zshrc
   template:
     src: zshrc.j2
-    dest: /home/lol/.zshrc
+    dest: /home/{{ user }}/.zshrc
     owner: "{{ user }}"
     group: "{{ user }}"
     mode: 0640
